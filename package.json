@@ -1,7 +1,7 @@
 {
   "name": "is-offline",
   "version": "0.0.0",
-  "description": "WIP",
+  "description": "A tiny (279B) library to detect `offline` status & respond to changes in the browser.",
   "repository": "lukeed/is-offline",
   "umd:main": "dist/is-offline.min.js",
   "module": "dist/is-offline.es.js",
@@ -24,9 +24,15 @@
     "dist"
   ],
   "keywords": [
+    "browser",
+    "connected",
+    "connection",
+    "connectivity",
+    "network",
+    "offline",
+    "online",
+    "status"
   ],
-  "dependencies": {
-  },
   "devDependencies": {
     "gzip-size": "^3.0.0",
     "pretty-bytes": "^4.0.2",
