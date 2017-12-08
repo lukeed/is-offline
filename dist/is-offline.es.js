@@ -1,12 +1,12 @@
-function check() {
-	return Promise.resolve(!navigator.onLine);
-}
-
 function listen(evts, func, toAdd) {
 	var fn = window[(toAdd ? 'add' : 'remove') + 'EventListener'];
 	evts.split(' ').forEach(function (ev) {
 		fn(ev, func);
 	});
+}
+
+function check() {
+	return Promise.resolve(!navigator.onLine);
 }
 
 function watch(cb) {
@@ -18,5 +18,4 @@ function watch(cb) {
 	}
 }
 
-export { watch };
-export default check;
+export { check, watch };
