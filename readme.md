@@ -37,7 +37,7 @@ unwatch();
 
 ## API
 
-### isOffline()
+### isOffline.check()
 
 Returns: `Promise`
 
@@ -53,7 +53,7 @@ Returns a function that is used to disable/unmount the event listeners.
 
 Type: `Function`
 
-The function to run whenever the network status changes. It receives a `Boolean` value, just like [`isOffline`](#isoffline).
+The function to run whenever the network status changes. It receives a `Boolean` value, just like [`isOffline`](#isofflinecheck).
 
 
 ## License
