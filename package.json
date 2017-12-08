@@ -1,6 +1,6 @@
 {
   "name": "is-offline",
-  "version": "0.0.0",
+  "version": "2.0.0",
   "description": "A tiny (279B) library to detect `offline` status & respond to changes in the browser.",
   "repository": "lukeed/is-offline",
   "umd:main": "dist/is-offline.min.js",
