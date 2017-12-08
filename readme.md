@@ -1,6 +1,6 @@
 # is-offline [![Build Status](https://travis-ci.org/lukeed/is-offline.svg?branch=master)](https://travis-ci.org/lukeed/is-offline)
 
-> A tiny (279B) library to detect `offline` status & respond to changes in the browser.
+> A tiny (276B) library to detect `offline` status & respond to changes in the browser.
 
 This module exposes three module definitions:
 
@@ -21,15 +21,15 @@ $ npm install --save is-offline
 ## Usage
 
 ```js
-import isOffline  from 'is-offline';
+import { check, watch } from 'is-offline';
 
 let foobar = bool => console.log('Am I offline?', bool);
 
 // Check if currently offline
-isOffline().then(foobar);
+check().then(foobar);
 
 // Setup a "watcher" to respond to all online/offline changes
-let unwatch = isOffline.watch(foobar);
+let unwatch = watch(foobar);
 
 // The "watcher" will be active until it's deactivated
 unwatch();
