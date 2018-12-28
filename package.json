@@ -1,5 +1,5 @@
 {
-  "version": "2.1.0",
+  "version": "2.1.1",
   "name": "is-offline",
   "repository": "lukeed/is-offline",
   "description": "A tiny (174B) library to detect `offline` status & respond to changes in the browser.",
