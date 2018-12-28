@@ -1,6 +1,6 @@
 function listen(evts, func, toAdd) {
-	let fn = window[(toAdd ? 'add' : 'remove') + 'EventListener'];
-	evts.split(' ').forEach(ev => {
+	var fn = window[(toAdd ? 'add' : 'remove') + 'EventListener'];
+	evts.split(' ').forEach(function (ev) {
 		fn(ev, func);
 	});
 }
@@ -10,10 +10,11 @@ export function check() {
 }
 
 export function watch(cb) {
-	let fn = _ => check().then(cb);
-	let listener = listen.bind(null, 'online offline', fn);
+	var listener = listen.bind(null, 'online offline', function () {
+		return check().then(cb);
+	});
 	listener(true);
-	return _ => {
+	return function () {
 		listener(false);
-	}
+	};
 }
