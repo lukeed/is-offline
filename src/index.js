@@ -1,8 +1,7 @@
-function listen(evts, func, toAdd) {
-	var fn = window[(toAdd ? 'add' : 'remove') + 'EventListener'];
-	evts.split(' ').forEach(function (ev) {
-		fn(ev, func);
-	});
+function listen(fn, action) {
+	action = window[action + 'EventListener'];
+	action('offline', fn);
+	action('online', fn);
 }
 
 export function check() {
@@ -10,11 +9,11 @@ export function check() {
 }
 
 export function watch(cb) {
-	var listener = listen.bind(null, 'online offline', function () {
+	function checker() {
 		return check().then(cb);
-	});
-	listener(true);
+	}
+	listen(checker, 'add');
 	return function () {
-		listener(false);
+		listen(checker, 'remove');
 	};
 }
