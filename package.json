@@ -1,10 +1,10 @@
 {
-  "name": "is-offline",
   "version": "2.1.0",
-  "description": "A tiny (276B) library to detect `offline` status & respond to changes in the browser.",
+  "name": "is-offline",
   "repository": "lukeed/is-offline",
-  "umd:main": "dist/is-offline.min.js",
-  "module": "dist/is-offline.es.js",
+  "description": "A tiny (276B) library to detect `offline` status & respond to changes in the browser.",
+  "unpkg": "dist/is-offline.min.js",
+  "module": "dist/is-offline.mjs",
   "main": "dist/is-offline.js",
   "license": "MIT",
   "author": {
