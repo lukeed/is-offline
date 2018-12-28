@@ -1,6 +1,6 @@
 # is-offline [![Build Status](https://travis-ci.org/lukeed/is-offline.svg?branch=master)](https://travis-ci.org/lukeed/is-offline)
 
-> A tiny (276B) library to detect `offline` status & respond to changes in the browser.
+> A tiny (215B) library to detect `offline` status & respond to changes in the browser.
 
 This module exposes three module definitions:
 
