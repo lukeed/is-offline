@@ -1,44 +1,41 @@
 const fs = require('fs');
-const { rollup } = require('rollup');
-const { minify } = require('uglify-js');
-const pretty = require('pretty-bytes');
+const mkdir = require('mk-dirs');
 const sizer = require('gzip-size');
+const pretty = require('pretty-bytes');
+const { minify } = require('terser');
 const pkg = require('./package');
 
-const umd = pkg['umd:main'];
+let data = fs.readFileSync('src/index.js', 'utf8');
 
-rollup({
-	input: 'src/index.js',
-	external: ['dlv'],
-	plugins: [
-		require('rollup-plugin-buble')({
-			transform: { module:false }
-		}),
-	]
-}).then(bun => {
-	bun.write({
-		format: 'cjs',
-		file: pkg.main
+mkdir('dist').then(() => {
+	// Copy as is for ESM
+	fs.writeFileSync(pkg.module, data);
+
+	// Minify & print gzip-size
+	let { code } = minify(data, { toplevel:true });
+	console.log(`> gzip size: ${pretty(sizer.sync(code))}`);
+
+	let keys = [];
+	// Mutate exports for CJS
+	data = data.replace(/export function\s?(.+?)(?=\()/gi, (_, x) => {
+		return keys.push(x) && `function ${x}`;
 	});
-
-	bun.write({
-		format: 'es',
-		file: pkg.module
+	keys.sort().forEach(key => {
+		data += `\nexports.${key} = ${key};`;
 	});
+	fs.writeFileSync(pkg.main, data + '\n');
 
-	bun.write({
-		file: umd,
-		format: 'umd',
-		name: pkg.name
-	}).then(_ => {
-		const data = fs.readFileSync(umd, 'utf8');
+	let name = pkg['umd:name'] || pkg.name;
 
-		// produce minified output
-		const { code } = minify(data);
-		fs.writeFileSync(umd, code);
+	// Write UMD bundle
+	let UMD = minify(`
+	(function (global, factory) {
+		typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+		typeof define === 'function' && define.amd ? define(['exports'], factory) :
+		(factory((global['${name}'] = {})));
+	}(this, (function (exports) {
+		${data}
+	})));`);
 
-		// output gzip size
-		const int = sizer.sync(code);
-		console.log(`> gzip size: ${ pretty(int) }`);
-	}).catch(console.log);
-}).catch(err => console.log(err))
+	fs.writeFileSync(pkg.unpkg, UMD.code);
+});
